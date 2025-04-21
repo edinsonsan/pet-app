@@ -73,20 +73,20 @@ class LoginContent extends StatelessWidget {
     );
   }
 
-  Widget _buildLogo(BuildContext context) {
-    final width = MediaQuery.of(context).size.width * 0.80;
-    final height = MediaQuery.of(context).size.height * 0.35;
-    return SizedBox(
-      width: width,
-      height: height,
-      child: Image.asset(
-        "assets/images/logoAutoDark.png",
-        fit: BoxFit.contain,
-        width: width,
-        height: height,
-      ),
-    );
-  }
+  // Widget _buildLogo(BuildContext context) {
+  //   final width = MediaQuery.of(context).size.width * 0.80;
+  //   final height = MediaQuery.of(context).size.height * 0.35;
+  //   return SizedBox(
+  //     width: width,
+  //     height: height,
+  //     child: Image.asset(
+  //       "assets/images/logoAutoDark.png",
+  //       fit: BoxFit.contain,
+  //       width: width,
+  //       height: height,
+  //     ),
+  //   );
+  // }
 
   Widget _logoPet() {
     return Center(

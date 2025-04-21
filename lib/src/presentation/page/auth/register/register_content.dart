@@ -61,18 +61,18 @@ class RegisterContent extends StatelessWidget {
   }
 
   // Logo Section
-  Widget _buildLogo(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.80,
-      height: MediaQuery.of(context).size.height * 0.35,
-      child: Image.asset(
-        "assets/images/logoAutoDark.png",
-        fit: BoxFit.contain,
-        width: MediaQuery.of(context).size.width * 0.80,
-        height: MediaQuery.of(context).size.height * 0.35,
-      ),
-    );
-  }
+  // Widget _buildLogo(BuildContext context) {
+  //   return SizedBox(
+  //     width: MediaQuery.of(context).size.width * 0.80,
+  //     height: MediaQuery.of(context).size.height * 0.35,
+  //     child: Image.asset(
+  //       "assets/images/logoAutoDark.png",
+  //       fit: BoxFit.contain,
+  //       width: MediaQuery.of(context).size.width * 0.80,
+  //       height: MediaQuery.of(context).size.height * 0.35,
+  //     ),
+  //   );
+  // }
 
   Widget _logoPet() {
     return Center(
