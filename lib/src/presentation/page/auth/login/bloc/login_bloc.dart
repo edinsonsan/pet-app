@@ -1,4 +1,4 @@
-import 'package:pet_app/src/infrastructure/inputs/inputs.dart';
+import 'package:pet_app/src/presentation/shared/infrastructure/inputs/inputs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';

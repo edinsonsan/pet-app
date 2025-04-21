@@ -1,6 +1,6 @@
-import 'package:pet_app/src/infrastructure/inputs/inputs.dart';
+import 'package:pet_app/src/presentation/shared/infrastructure/inputs/inputs.dart';
 import 'package:pet_app/src/presentation/page/auth/login/bloc/login_bloc.dart';
-import 'package:pet_app/src/presentation/widgets/widgets.dart';
+import 'package:pet_app/src/presentation/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
