@@ -1,4 +1,4 @@
-import 'package:pet_app/src/config/menu/menu_items.dart';
+import 'package:pet_app/config/menu/menu_items.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

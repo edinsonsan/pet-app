@@ -1,4 +1,4 @@
-import 'package:pet_app/src/config/config.dart';
+import 'package:pet_app/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc_providers.dart';
