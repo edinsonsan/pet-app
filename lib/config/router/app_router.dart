@@ -1,6 +1,6 @@
 
 import 'package:go_router/go_router.dart';
-import 'package:pet_app/src/presentation/page/auth/auth.dart';
+import 'package:pet_app/features/auth/auth.dart';
 
 // GoRouter configuration
 final appRouter = GoRouter(
