@@ -14,8 +14,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier({required this.authRepository}) : super(AuthState());
 
   Future<void> loginUser(String email, String password) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-
+    // await Future.delayed(const Duration(milliseconds: 500));
     try {
       final user = await authRepository.login(email, password);
       _setLoggedUser(user);
@@ -29,20 +28,39 @@ class AuthNotifier extends StateNotifier<AuthState> {
     // state = state.copyWith(user: user, authStatus: AuthStatus.authenticated);
   }
 
-  void forgotPassword(String email) async {}
+  Future<void> forgotPassword(String email) async {}
 
-  void registerUser(
+  Future<void> registerUser(
     String name,
     String email,
-    String phone,
+    // String phone,
     String password,
-  ) async {}
+    String confirmPassword,
+  ) async {
+    try {
+      final user = await authRepository.register(
+        name,
+        email,
+        password,
+        confirmPassword,
+      );
+      _setLoggedUser(user);
+    } on CustomError catch (e) {
+      logout(e.message);
+    } catch (e) {
+      logout('Error no controlado');
+    }
+  }
 
   void checkAuthStatus() async {}
 
   void _setLoggedUser(User user) {
     // TODO: necesito guardar el token físicamente
-    state = state.copyWith(user: user, authStatus: AuthStatus.authenticated, errorMessage: user.message);
+    state = state.copyWith(
+      user: user,
+      authStatus: AuthStatus.authenticated,
+      errorMessage: user.message,
+    );
   }
 
   Future<void> logout([String? errorMessage]) async {

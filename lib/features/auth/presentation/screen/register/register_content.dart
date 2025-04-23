@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_app/features/auth/presentation/providers/register_form_provider.dart';
+import 'package:pet_app/features/auth/presentation/presentation.dart';
 import 'package:pet_app/features/shared/infrastructure/inputs/inputs.dart';
 // import 'package:pet_app/features/auth/presentation/screen/register/bloc/register_bloc.dart';
 import 'package:pet_app/features/shared/widgets/widgets.dart';
@@ -18,6 +18,13 @@ class RegisterContent extends ConsumerWidget {
     required this.onToggleVisibility,
   });
 
+  void snackBar(BuildContext context, AuthState next) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(next.errorMessage)),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final registerProvider = ref.watch(registerFormProvider);
@@ -29,6 +36,10 @@ class RegisterContent extends ConsumerWidget {
 
     final colors = Theme.of(context).colorScheme;
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+    ref.listen(authProvider, (previous, next) {
+      snackBar(context, next);
+    });
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

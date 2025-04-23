@@ -8,16 +8,16 @@ final registerFormProvider =
     StateNotifierProvider.autoDispose<RegisterFormNotifier, RegisterFormState>((
       ref,
     ) {
-      final loginUserCallback = ref.watch(authProvider.notifier).loginUser;
+      final registerUserCallback = ref.watch(authProvider.notifier).registerUser;
 
-      return RegisterFormNotifier(loginUserCallback: loginUserCallback);
+      return RegisterFormNotifier(registerUserCallback: registerUserCallback);
     });
 
 //! 2 - Como implementamos un notifier
 class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
-  final Function(String, String) loginUserCallback;
+  final Future<void> Function(String, String, String, String) registerUserCallback;
 
-  RegisterFormNotifier({required this.loginUserCallback})
+  RegisterFormNotifier({required this.registerUserCallback})
     : super(RegisterFormState());
 
   onNameChange(String value) {
@@ -95,10 +95,8 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
 
   onFormSubmit() async {
     _touchEveryField();
-
     if (!state.isValid) return;
-
-    await loginUserCallback(state.email.value, state.password.value);
+    await registerUserCallback(state.name.value ,state.email.value, state.password.value, state.confirmPassword.value);
   }
 
   _touchEveryField() {
