@@ -111,7 +111,9 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
 
     state = state.copyWith(
       isFormPosted: true,
+      name: name,
       email: email,
+      phone: phone,
       password: password,
       confirmPassword: confirmPassword,
       isValid: Formz.validate([
@@ -152,7 +154,7 @@ class RegisterFormState {
     bool? isFormPosted,
     bool? isValid,
     Username? name,
-    Username? apellido,
+    // Username? apellido,
     Email? email,
     Phone? phone,
     Password? password,
@@ -180,7 +182,7 @@ class RegisterFormState {
   @override
   String toString() {
     return '''
-  LoginFormState:
+  RegisterFormState:
     isPosting: $isPosting
     isFormPosted: $isFormPosted
     isValid: $isValid

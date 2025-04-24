@@ -28,7 +28,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
     // state = state.copyWith(user: user, authStatus: AuthStatus.authenticated);
   }
 
-  Future<void> forgotPassword(String email) async {}
+  Future<void> forgotPassword(String email) async {
+    try {
+      final user = await authRepository.forgotPassword(email);
+    _setLoggedUser(user);
+    } on CustomError catch (e) {
+      logout(e.message);
+    } catch (e) {
+      logout('Error no controlado');
+    }
+  }
 
   Future<void> registerUser(
     String name,

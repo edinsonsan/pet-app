@@ -110,7 +110,7 @@ class AuthDataSourceImpl extends AuthDataSource {
   @override
   Future<User> forgotPassword(String email) async {
     try {
-      final response = await dio.post('/set-password', data: {'email': email});
+      final response = await dio.post('/forgot-password', data: {'email': email});
       final user = UserMapper.userJsonToEntity(response.data);
       return user;
     } on DioException catch (e) {

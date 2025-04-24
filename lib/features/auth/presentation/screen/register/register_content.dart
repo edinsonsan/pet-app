@@ -200,7 +200,7 @@ class RegisterContent extends ConsumerWidget {
               //             : null,
               onChanged: ref.read(registerFormProvider.notifier).onEmailChange,
               errorMessage:
-                  registerProvider.isPosting ? email.errorMessage : null,
+                  registerProvider.isFormPosted ? email.errorMessage : null,
             ),
 
             const SizedBox(height: 20),
@@ -218,7 +218,7 @@ class RegisterContent extends ConsumerWidget {
               //             : null,
               onChanged: ref.read(registerFormProvider.notifier).onPhoneChange,
               errorMessage:
-                  registerProvider.isPosting ? phone.errorMessage : null,
+                  registerProvider.isFormPosted ? phone.errorMessage : null,
             ),
             const SizedBox(height: 20),
             _buildTextField(
@@ -280,7 +280,7 @@ class RegisterContent extends ConsumerWidget {
                 // );
               },
               errorMessage:
-                  registerProvider.isPosting
+                  registerProvider.isFormPosted
                       ? confirmPassword.errorMessage
                       : null,
             ),
