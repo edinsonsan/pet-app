@@ -30,8 +30,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> forgotPassword(String email) async {
     try {
-      final user = await authRepository.forgotPassword(email);
-    _setLoggedUser(user);
+      final message = await authRepository.forgotPassword(email);
+      state = state.copyWith(errorMessage: message);
     } on CustomError catch (e) {
       logout(e.message);
     } catch (e) {

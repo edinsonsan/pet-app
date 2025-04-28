@@ -3,10 +3,9 @@ import 'package:formz/formz.dart';
 import 'package:pet_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:pet_app/features/shared/shared.dart';
 
-//! 3 - StateNotifierProvider - consume afuera
+//! 3 - StateNotifi5erProvider - consume afuera
 final forgotFormProvider = StateNotifierProvider.autoDispose<ForgotFormNotifier,ForgotFormState>((ref) {
-  //TODO: por cambiar el loginUser
-  final forgotUserCallback = ref.watch(authProvider.notifier).loginUser;
+  final forgotUserCallback = ref.watch(authProvider.notifier).forgotPassword;
 
 
   return ForgotFormNotifier(
@@ -18,7 +17,7 @@ final forgotFormProvider = StateNotifierProvider.autoDispose<ForgotFormNotifier,
 //! 2 - Como implementamos un notifier
 class ForgotFormNotifier extends StateNotifier<ForgotFormState> {
 
-  final Function(String, String) forgotUserCallback;
+  final Future<void> Function(String) forgotUserCallback;
 
   ForgotFormNotifier({
     required this.forgotUserCallback,
@@ -38,7 +37,7 @@ class ForgotFormNotifier extends StateNotifier<ForgotFormState> {
 
     if ( !state.isValid ) return;
 
-    // await forgotUserCallback( state.email.value );
+    await forgotUserCallback( state.email.value );
 
   }
 

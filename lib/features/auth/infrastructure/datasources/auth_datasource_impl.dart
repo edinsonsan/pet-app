@@ -7,9 +7,11 @@ import 'package:pet_app/features/auth/infrastructure/infrastructure.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class AuthDataSourceImpl extends AuthDataSource {
+
+  final dio = Dio(BaseOptions(baseUrl: Environment.apiUrl));
+
   Future<String> getDeviceName() async {
     final deviceInfo = DeviceInfoPlugin();
-
     if (Platform.isAndroid) {
       final androidInfo = await deviceInfo.androidInfo;
       return '${androidInfo.manufacturer} ${androidInfo.model}';
@@ -20,8 +22,6 @@ class AuthDataSourceImpl extends AuthDataSource {
       return 'Unknown Device';
     }
   }
-
-  final dio = Dio(BaseOptions(baseUrl: Environment.apiUrl));
 
   @override
   Future<User> checkAuthStatus(String token) {
@@ -108,14 +108,17 @@ class AuthDataSourceImpl extends AuthDataSource {
   }
 
   @override
-  Future<User> forgotPassword(String email) async {
+  Future<String> forgotPassword(String email) async {
     try {
-      final response = await dio.post('/forgot-password', data: {'email': email});
-      final user = UserMapper.userJsonToEntity(response.data);
-      return user;
+      final response = await dio.post(
+        '/forgot-password',
+        data: {'email': email},
+      );
+      final message = UserMapper.resetPasswordMessage(response.data);
+      return message;
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
-        throw CustomError(e.response?.data['message'] ?? 'Email Incorrecto');
+        throw CustomError(e.response?.data['message'] ?? 'Email no encontrado');
       }
       if (e.type == DioExceptionType.connectionTimeout) {
         throw CustomError('Revisar conexión a internet');

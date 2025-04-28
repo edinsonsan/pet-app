@@ -29,4 +29,13 @@ class UserMapper {
       message: json['message'],
     );
   }
+
+
+  static String resetPasswordMessage(Map<String, dynamic> json) {
+    return json['message']; // Solo devuelve el mensaje
+  }
+
+  
 }
+
+

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_app/features/auth/auth.dart';
 import 'package:pet_app/features/auth/presentation/providers/forgot_form_provider.dart';
 import 'package:pet_app/features/shared/infrastructure/inputs/inputs.dart';
 // import 'package:pet_app/features/auth/presentation/screen/forgot_password/bloc/forgot_bloc.dart';
@@ -26,10 +27,21 @@ class ForgotPassword extends ConsumerWidget {
   //   }
   // }
 
+  void snackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final ForgotBloc forgotBloc = context.watch<ForgotBloc>();
     final forgotProvider = ref.watch(forgotFormProvider);
+    ref.listen(authProvider, (previous, next) {
+      if (next.errorMessage.isEmpty) return;
+      snackBar(context, next.errorMessage);
+    });
     final email = forgotProvider.email;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
