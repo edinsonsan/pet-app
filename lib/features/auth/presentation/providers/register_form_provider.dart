@@ -96,7 +96,9 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
   onFormSubmit() async {
     _touchEveryField();
     if (!state.isValid) return;
+    state = state.copyWith(isPosting: true); // ← Así se actualiza correctamente
     await registerUserCallback(state.name.value ,state.email.value, state.password.value, state.confirmPassword.value);
+    state = state.copyWith(isPosting: false); // ← Así se actualiza correctamente
   }
 
   _touchEveryField() {

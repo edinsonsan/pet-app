@@ -20,9 +20,9 @@ class RegisterContent extends ConsumerWidget {
 
   void snackBar(BuildContext context, AuthState next) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(next.errorMessage)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(next.errorMessage)));
   }
 
   @override
@@ -286,9 +286,10 @@ class RegisterContent extends ConsumerWidget {
             ),
             const SizedBox(height: 30.0),
             _buildRegisterButton(
-              onPressed: () {
-                ref.read(registerFormProvider.notifier).onFormSubmit();
-              },
+              onPressed:
+                  registerProvider.isPosting
+                      ? null
+                      : ref.read(registerFormProvider.notifier).onFormSubmit,
             ),
           ],
         ),

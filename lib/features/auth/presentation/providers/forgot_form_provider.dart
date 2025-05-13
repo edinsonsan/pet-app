@@ -36,8 +36,10 @@ class ForgotFormNotifier extends StateNotifier<ForgotFormState> {
     _touchEveryField();
 
     if ( !state.isValid ) return;
+    state = state.copyWith(isPosting: true); // ← Así se actualiza correctamente
 
     await forgotUserCallback( state.email.value );
+    state = state.copyWith(isPosting: false); // ← Así se actualiza correctamente
 
   }
 

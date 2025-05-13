@@ -4,71 +4,64 @@ import 'package:pet_app/features/shared/shared.dart';
 import 'package:pet_app/features/auth/presentation/providers/auth_provider.dart';
 
 //! 3 - StateNotifierProvider - consume afuera
-final loginFormProvider = StateNotifierProvider.autoDispose<LoginFormNotifier,LoginFormState>((ref) {
+final loginFormProvider =
+    StateNotifierProvider.autoDispose<LoginFormNotifier, LoginFormState>((ref) {
+      final loginUserCallback = ref.watch(authProvider.notifier).loginUser;
 
-  final loginUserCallback = ref.watch(authProvider.notifier).loginUser;
-
-
-  return LoginFormNotifier(
-    loginUserCallback:loginUserCallback
-  );
-});
-
+      return LoginFormNotifier(loginUserCallback: loginUserCallback);
+    });
 
 //! 2 - Como implementamos un notifier
 class LoginFormNotifier extends StateNotifier<LoginFormState> {
-
   final Function(String, String) loginUserCallback;
 
-  LoginFormNotifier({
-    required this.loginUserCallback,
-  }): super( LoginFormState() );
-  
-  onEmailChange( String value ) {
+  LoginFormNotifier({required this.loginUserCallback})
+    : super(LoginFormState());
+
+  onEmailChange(String value) {
     final newEmail = Email.dirty(value: value);
     state = state.copyWith(
       email: newEmail,
-      isValid: Formz.validate([ newEmail, state.password ])
+      isValid: Formz.validate([newEmail, state.password]),
     );
   }
 
-  onPasswordChanged( String value ) {
+  onPasswordChanged(String value) {
     final newPassword = Password.dirty(value: value);
     state = state.copyWith(
       password: newPassword,
-      isValid: Formz.validate([ newPassword, state.email ])
+      isValid: Formz.validate([newPassword, state.email]),
     );
   }
 
   onFormSubmit() async {
     _touchEveryField();
 
-    if ( !state.isValid ) return;
+    if (!state.isValid) return;
 
-    await loginUserCallback( state.email.value, state.password.value );
+    state = state.copyWith(isPosting: true);  // ← Así se actualiza correctamente
+
+    await loginUserCallback(state.email.value, state.password.value);
+
+    state = state.copyWith(isPosting: false);  // ← Así se actualiza correctamente
 
   }
 
   _touchEveryField() {
-
-    final email    = Email.dirty(value: state.email.value);
+    final email = Email.dirty(value: state.email.value);
     final password = Password.dirty(value: state.password.value);
 
     state = state.copyWith(
       isFormPosted: true,
       email: email,
       password: password,
-      isValid: Formz.validate([ email, password ])
+      isValid: Formz.validate([email, password]),
     );
-
   }
-
 }
-
 
 //! 1 - State del provider
 class LoginFormState {
-
   final bool isPosting;
   final bool isFormPosted;
   final bool isValid;
@@ -80,7 +73,7 @@ class LoginFormState {
     this.isFormPosted = false,
     this.isValid = false,
     this.email = const Email.pure(),
-    this.password = const Password.pure()
+    this.password = const Password.pure(),
   });
 
   LoginFormState copyWith({

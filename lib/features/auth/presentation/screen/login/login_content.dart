@@ -75,7 +75,7 @@ class LoginContent extends ConsumerWidget {
                         loginForm,
                       ),
                       const SizedBox(height: 30.0),
-                      _buildLoginButton(context, ref),
+                      _buildLoginButton(context, ref, ),
                     ],
                   ),
                 ),
@@ -276,9 +276,9 @@ class LoginContent extends ConsumerWidget {
             fontSize: 22.0,
             fontWeight: FontWeight.bold,
             buttonColor: const Color(0xFF273671),
-            onPressed: () {
-              ref.read(loginFormProvider.notifier).onFormSubmit();
-            },
+            onPressed: ref.watch(loginFormProvider).isPosting
+              ? null
+              : ref.read(loginFormProvider.notifier).onFormSubmit,
           ),
         ),
       ),

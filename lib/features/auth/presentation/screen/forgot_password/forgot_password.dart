@@ -72,9 +72,9 @@ class ForgotPassword extends ConsumerWidget {
                   CustomFilledButton(
                     text: "Enviar correo",
 
-                    onPressed: () {
-                      ref.read(forgotFormProvider.notifier).onFormSubmit();
-                    },
+                    onPressed: forgotProvider.isPosting
+                    ?null
+                    : ref.read(forgotFormProvider.notifier).onFormSubmit,
                     buttonColor: Colors.white,
                     textColor: Colors.black,
                     prefixIcon: const Icon(Icons.send, color: Colors.black),
