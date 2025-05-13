@@ -7,7 +7,6 @@ import 'package:pet_app/features/auth/infrastructure/infrastructure.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class AuthDataSourceImpl extends AuthDataSource {
-
   final dio = Dio(BaseOptions(baseUrl: Environment.apiUrl));
 
   Future<String> getDeviceName() async {
@@ -24,9 +23,22 @@ class AuthDataSourceImpl extends AuthDataSource {
   }
 
   @override
-  Future<User> checkAuthStatus(String token) {
-    // TODO: implement checkAuthStatus
-    throw UnimplementedError();
+  Future<User> checkAuthStatus(String token) async {
+    try {
+      final response = await dio.get(
+        '/auth/check-status',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      final user = UserMapper.userJsonToEntity(response.data);
+      return user;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw CustomError('Token incorrecto');
+      }
+      throw Exception();
+    } catch (e) {
+      throw Exception();
+    }
   }
 
   @override
